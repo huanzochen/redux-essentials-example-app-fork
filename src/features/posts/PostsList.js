@@ -6,6 +6,24 @@ import { TimeAgo } from './TimeAgo'
 import { ReactionButtons } from './ReactionButtons'
 import { selectAllPosts, fetchPosts } from './postsSlice'
 
+let PostExcerpt = ({ post }) => {
+    return (
+        <article className="post-excerpt" key={post.id}>
+        <h3>{post.title}</h3>
+        <p className="post-content">{post.content}</p>
+        <PostAuthor userId={post.user}></PostAuthor>
+        <TimeAgo timestamp={post.date}></TimeAgo>
+        <ReactionButtons post={post}></ReactionButtons>
+        <Link to={`/posts/${post.id}`} className="button muted-button">
+            View Post
+        </Link>
+        </article> 
+    )
+}
+
+PostExcerpt = React.memo(PostExcerpt)
+
+
 export const PostsList = () => {
     const dispatch = useDispatch()
 
@@ -30,16 +48,7 @@ export const PostsList = () => {
             .sort((a, b) => b.date.localeCompare(a.date))
 
         content = orderedPosts.map(post => (
-            <article className="post-excerpt" key={post.id}>
-                <h3>{post.title}</h3>
-                <p className="post-content">{post.content}</p>
-                <PostAuthor userId={post.user}></PostAuthor>
-                <TimeAgo timestamp={post.date}></TimeAgo>
-                <ReactionButtons post={post}></ReactionButtons>
-                <Link to={`/posts/${post.id}`} className="button muted-button">
-                    View Post
-                </Link>
-            </article> 
+            <PostExcerpt key={post.id} post={post}></PostExcerpt>
             ))
     } else if (postStatus === 'failed') {
         content = <div>{error}</div>
