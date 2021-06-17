@@ -26,27 +26,6 @@ let PostExcerpt = ({ postId }) => {
         </article> 
     )
 }
-a
-// PostExcerpt = React.memo(PostExcerpt)
-
-
-let PostExcerpt = ({ post }) => {
-    return (
-        <article className="post-excerpt" key={post.id}>
-        <h3>{post.title}</h3>
-        <p className="post-content">{post.content}</p>
-        <PostAuthor userId={post.user}></PostAuthor>
-        <TimeAgo timestamp={post.date}></TimeAgo>
-        <ReactionButtons post={post}></ReactionButtons>
-        <Link to={`/posts/${post.id}`} className="button muted-button">
-            View Post
-        </Link>
-        </article> 
-    )
-}
-
-PostExcerpt = React.memo(PostExcerpt)
-
 
 export const PostsList = () => {
     const dispatch = useDispatch()
